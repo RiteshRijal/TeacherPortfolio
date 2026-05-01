@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Deep Rijal | Science & Math Teacher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0d1b2a;
+    --navy-mid: #1a2e45;
+    --gold: #c9933a;
+    --gold-light: #e8b96a;
+    --cream: #f7f3ec;
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --white: #ffffff;
+    --section-gap: 100px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 60px;
+    background: rgba(13, 27, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(201,147,58,0.2);
+    transition: all 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none; font-size: 0.88rem;
+    font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 60px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(201,147,58,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-grid-lines {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image:
+      linear-gradient(var(--gold) 1px, transparent 1px),
+      linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-left { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 6px 16px; border-radius: 2px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+    font-weight: 900; line-height: 1.05;
+    color: var(--white);
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .hero-name em { color: var(--gold); font-style: italic; }
+  .hero-subtitle {
+    margin-top: 20px;
+    font-size: 1.15rem; font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    max-width: 440px;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+  .hero-cta {
+    margin-top: 44px; display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+  .btn-primary {
+    display: inline-block; padding: 14px 32px;
+    background: var(--gold); color: var(--navy);
+    font-weight: 600; font-size: 0.88rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    text-decoration: none; border-radius: 3px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-ghost {
+    display: inline-block; padding: 13px 30px;
+    border: 1px solid rgba(255,255,255,0.3); color: var(--white);
+    font-weight: 500; font-size: 0.88rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    text-decoration: none; border-radius: 3px;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  .hero-right {
+    position: relative; z-index: 2;
+    display: flex; justify-content: center; align-items: center;
+  }
+  .hero-photo-frame {
+    position: relative; width: 380px; height: 460px;
+  }
+  .hero-photo-frame::before {
+    content: '';
+    position: absolute; top: 20px; left: 20px; right: -20px; bottom: -20px;
+    border: 2px solid var(--gold); border-radius: 4px; opacity: 0.4;
+  }
+  .hero-photo {
+    width: 100%; height: 100%; object-fit: cover; border-radius: 4px;
+    background: linear-gradient(135deg, #1a2e45 0%, #0d1b2a 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.25); font-size: 0.85rem;
+    text-align: center; letter-spacing: 0.06em;
+  }
+  .photo-placeholder-text { padding: 30px; line-height: 2; }
+  .hero-stats {
+    position: absolute; bottom: -30px; left: -20px;
+    display: flex; gap: 0;
+    background: var(--gold); border-radius: 3px; overflow: hidden;
+  }
+  .hero-stat {
+    padding: 16px 24px; text-align: center;
+    border-right: 1px solid rgba(0,0,0,0.15);
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat .num {
+    display: block; font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 900; color: var(--navy);
+  }
+  .hero-stat .lbl {
+    font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--navy); opacity: 0.75; font-weight: 600;
+  }
+
+  /* ─── SECTION BASE ─── */
+  section { padding: var(--section-gap) 60px; }
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700; line-height: 1.15; color: var(--navy);
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .divider {
+    width: 60px; height: 3px; background: var(--gold);
+    margin: 24px 0 48px;
+  }
+
+  /* ─── ABOUT ─── */
+  .about { background: var(--white); }
+  .about-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .about-img {
+    height: 500px; border-radius: 4px; overflow: hidden;
+    background: linear-gradient(135deg, #e8e0d0 0%, #d4c9b8 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 0.85rem; letter-spacing: 0.08em;
+    position: relative;
+  }
+  .about-img::after {
+    content: '';
+    position: absolute; top: -12px; right: -12px;
+    width: 100px; height: 100px;
+    border-top: 3px solid var(--gold); border-right: 3px solid var(--gold);
+  }
+  .about-text p {
+    color: var(--muted); line-height: 1.85; font-size: 1rem;
+    margin-bottom: 18px;
+  }
+  .about-quals { margin-top: 36px; display: flex; flex-direction: column; gap: 16px; }
+  .qual-item {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 18px 20px; background: var(--cream);
+    border-left: 3px solid var(--gold); border-radius: 2px;
+  }
+  .qual-icon { color: var(--gold); font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+  .qual-title { font-weight: 600; font-size: 0.95rem; color: var(--navy); }
+  .qual-sub { font-size: 0.82rem; color: var(--muted); margin-top: 3px; }
+
+  /* ─── SUBJECTS ─── */
+  .subjects { background: var(--cream); }
+  .subjects-inner { max-width: 1200px; margin: 0 auto; }
+  .subjects-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  .subject-card {
+    background: var(--white); border-radius: 4px;
+    padding: 36px 30px; position: relative; overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+    border-bottom: 3px solid transparent;
+  }
+  .subject-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    border-bottom-color: var(--gold);
+  }
+  .subject-card::before {
+    content: attr(data-num);
+    position: absolute; top: 20px; right: 24px;
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem; font-weight: 900;
+    color: rgba(201,147,58,0.08); line-height: 1;
+  }
+  .subject-icon { font-size: 1.8rem; margin-bottom: 20px; }
+  .subject-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+  .subject-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+  /* ─── UPDATES / NEWS ─── */
+  .updates { background: var(--navy); padding: var(--section-gap) 60px; }
+  .updates .section-title { color: var(--white); }
+  .updates-inner { max-width: 1200px; margin: 0 auto; }
+  .updates-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .update-card {
+    background: var(--navy-mid); border-radius: 4px; overflow: hidden;
+    transition: transform 0.25s;
+    border: 1px solid rgba(201,147,58,0.12);
+  }
+  .update-card:hover { transform: translateY(-4px); }
+  .update-img {
+    height: 180px;
+    background: linear-gradient(135deg, #1f3850, #0d1b2a);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.2); font-size: 0.78rem; letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .update-body { padding: 24px; }
+  .update-tag {
+    font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600;
+  }
+  .update-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--white); margin: 10px 0 10px; line-height: 1.4; }
+  .update-date { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
+
+  /* ─── VIDEOS ─── */
+  .videos { background: var(--cream); }
+  .videos-inner { max-width: 1200px; margin: 0 auto; }
+  .videos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .video-card {
+    border-radius: 4px; overflow: hidden; background: var(--white);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .video-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.12); }
+  .video-thumb {
+    width: 100%; height: 190px;
+    background: linear-gradient(135deg, #1a2e45, #0d1b2a);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; cursor: pointer;
+  }
+  .video-thumb .play-btn {
+    width: 54px; height: 54px; border-radius: 50%;
+    background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .video-card:hover .play-btn { transform: scale(1.1); background: var(--gold-light); }
+  .play-btn svg { width: 20px; height: 20px; fill: var(--navy); margin-left: 4px; }
+  .video-thumb .yt-placeholder {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.15); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .video-info { padding: 20px; }
+  .video-label { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+  .video-title { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--navy); margin: 8px 0 0; line-height: 1.45; }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonials { background: var(--white); }
+  .testimonials-inner { max-width: 1200px; margin: 0 auto; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .testi-card {
+    padding: 36px; background: var(--cream); border-radius: 4px;
+    position: relative; transition: transform 0.25s;
+  }
+  .testi-card:hover { transform: translateY(-4px); }
+  .testi-card::before {
+    content: '"'; font-family: 'Playfair Display', serif;
+    font-size: 6rem; color: var(--gold); opacity: 0.15;
+    position: absolute; top: 10px; left: 20px; line-height: 1;
+  }
+  .testi-text { font-size: 0.95rem; color: var(--muted); line-height: 1.8; margin-bottom: 24px; position: relative; }
+  .testi-author { display: flex; align-items: center; gap: 14px; }
+  .testi-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--gold); display: flex; align-items: center;
+    justify-content: center; color: var(--white); font-weight: 700; font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+  .testi-name { font-weight: 600; font-size: 0.9rem; color: var(--navy); }
+  .testi-role { font-size: 0.78rem; color: var(--muted); }
+
+  /* ─── CONTACT ─── */
+  .contact { background: var(--navy); }
+  .contact-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+  .contact .section-title { color: var(--white); }
+  .contact .section-label { justify-content: center; }
+  .contact .divider { margin: 24px auto 48px; }
+  .contact-desc { color: rgba(255,255,255,0.55); line-height: 1.8; font-size: 1rem; margin-bottom: 50px; }
+  .contact-cards { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 50px; }
+  .contact-card {
+    background: var(--navy-mid); border: 1px solid rgba(201,147,58,0.2);
+    border-radius: 4px; padding: 28px 32px; min-width: 200px;
+    text-align: center; transition: border-color 0.2s;
+  }
+  .contact-card:hover { border-color: var(--gold); }
+  .contact-card .icon { font-size: 1.5rem; margin-bottom: 12px; }
+  .contact-card .type { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 8px; }
+  .contact-card .val { font-size: 0.9rem; color: rgba(255,255,255,0.7); }
+  .social-links { display: flex; justify-content: center; gap: 16px; }
+  .social-link {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.6); text-decoration: none;
+    font-size: 0.85rem; transition: all 0.2s;
+  }
+  .social-link:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #080f18; padding: 32px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(201,147,58,0.15);
+  }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--white); }
+  .footer-logo span { color: var(--gold); }
+  .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; text-align: center; gap: 60px; }
+    .hero-right { order: -1; }
+    .hero-photo-frame { width: 260px; height: 320px; }
+    .hero-stats { position: static; margin-top: 16px; justify-content: center; }
+    .hero-cta { justify-content: center; }
+    section { padding: 60px 24px; }
+    .about-inner, .subjects-grid, .updates-grid, .videos-grid, .testimonials-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Deep <span>Rijal.</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#subjects">Subjects</a></li>
+    <li><a href="#updates">Updates</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-lines"></div>
+  <div class="hero-left">
+    <div class="hero-tag">Science &amp; Math Teacher · Nepal</div>
+    <h1 class="hero-name">
+      Deep<br><em>Rijal.</em>
+    </h1>
+    <p class="hero-subtitle">
+      Middle School Science &amp; Mathematics Teacher with 10+ years of experience. Specialising in Chemistry, Physics and interactive classroom learning in Nepal.
+    </p>
+    <div class="hero-cta">
+      <a href="#about" class="btn-primary">Learn More</a>
+      <a href="#contact" class="btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-photo-frame">
+      <div class="hero-photo">
+        <div class="photo-placeholder-text">
+          📷<br>Teacher Photo<br><small style="opacity:0.6">Replace with your image</small>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="num">10+</span>
+          <span class="lbl">Years</span>
+        </div>
+        <div class="hero-stat">
+          <span class="num">40+</span>
+          <span class="lbl">Per Class</span>
+        </div>
+        <div class="hero-stat">
+          <span class="num">2</span>
+          <span class="lbl">Schools</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-img reveal">
+      📷 About / Classroom Photo
+    </div>
+    <div class="reveal">
+      <div class="section-label">Who I Am</div>
+      <h2 class="section-title">Passionate About <em>Science &amp; Maths</em></h2>
+      <div class="divider"></div>
+      <p>I am Deep Rijal, a dedicated Science and Mathematics Teacher from Nijgadh, Bara, Nepal. With over 10 years of classroom experience across two schools, I specialise in making General Science, Chemistry and Physics engaging and approachable for every student.</p>
+      <p>My teaching philosophy is built on positive encouragement and reinforcement — motivating students through interactive instruction, real-world observation, and structured lesson plans aligned to curriculum standards. I work hard to identify each student's challenges and resolve them early.</p>
+      <div class="about-quals">
+        <div class="qual-item">
+          <div class="qual-icon">🎓</div>
+          <div>
+            <div class="qual-title">Bachelor of Science — Major in Chemistry</div>
+            <div class="qual-sub">Makwanpur Multiple Campus, Hetauda, Nepal · 2010–2014</div>
+          </div>
+        </div>
+        <div class="qual-item">
+          <div class="qual-icon">📜</div>
+          <div>
+            <div class="qual-title">Intermediate in Science (with Computer)</div>
+            <div class="qual-sub">Makwanpur Multiple Campus, Hetauda, Nepal · 2008–2010</div>
+          </div>
+        </div>
+        <div class="qual-item">
+          <div class="qual-icon">📍</div>
+          <div>
+            <div class="qual-title">Bazar Tole, Nijgadh-8, Bara, Narayani, Nepal</div>
+            <div class="qual-sub">DOB: 27 November 1991 · Nationality: Nepali</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUBJECTS -->
+<section class="subjects" id="subjects">
+  <div class="subjects-inner">
+    <div class="reveal">
+      <div class="section-label">What I Teach</div>
+      <h2 class="section-title">Areas of <em>Expertise</em></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="subjects-grid">
+      <div class="subject-card reveal" data-num="01">
+        <div class="subject-icon">📐</div>
+        <div class="subject-title">Pure Mathematics</div>
+        <div class="subject-desc">Algebra, calculus, trigonometry and proof — building the rigorous foundation that unlocks every other branch of mathematics.</div>
+      </div>
+      <div class="subject-card reveal" data-num="02">
+        <div class="subject-icon">📊</div>
+        <div class="subject-title">Statistics &amp; Probability</div>
+        <div class="subject-desc">From data interpretation to inferential reasoning — essential skills for a world driven by data and evidence.</div>
+      </div>
+      <div class="subject-card reveal" data-num="03">
+        <div class="subject-icon">🔢</div>
+        <div class="subject-title">Further Mathematics</div>
+        <div class="subject-desc">Advanced topics for students aiming for top universities: complex numbers, matrices, differential equations and beyond.</div>
+      </div>
+      <div class="subject-card reveal" data-num="04">
+        <div class="subject-icon">🧠</div>
+        <div class="subject-title">Exam Preparation</div>
+        <div class="subject-desc">Targeted revision programmes for GCSE, A-Level, IB and other qualifications with proven results.</div>
+      </div>
+      <div class="subject-card reveal" data-num="05">
+        <div class="subject-icon">💻</div>
+        <div class="subject-title">Maths &amp; Computing</div>
+        <div class="subject-desc">Bridging mathematics and programming — exploring how algorithms, logic and code bring mathematical ideas to life.</div>
+      </div>
+      <div class="subject-card reveal" data-num="06">
+        <div class="subject-icon">🏅</div>
+        <div class="subject-title">Competition Coaching</div>
+        <div class="subject-desc">Preparing talented students for Olympiad-level competitions and enrichment challenges that stretch beyond the curriculum.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UPDATES -->
+<section class="updates" id="updates">
+  <div class="updates-inner">
+    <div class="reveal">
+      <div class="section-label">Latest News</div>
+      <h2 class="section-title" style="color:var(--white);">Recent <em>Updates</em></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="updates-grid">
+      <div class="update-card reveal">
+        <div class="update-img">📷 Update Image</div>
+        <div class="update-body">
+          <div class="update-tag">Announcement</div>
+          <div class="update-title">New after-school revision sessions starting this term</div>
+          <div class="update-date">April 28, 2026</div>
+        </div>
+      </div>
+      <div class="update-card reveal">
+        <div class="update-img">📷 Update Image</div>
+        <div class="update-body">
+          <div class="update-tag">Achievement</div>
+          <div class="update-title">Students achieve top marks in National Mathematics Olympiad</div>
+          <div class="update-date">April 15, 2026</div>
+        </div>
+      </div>
+      <div class="update-card reveal">
+        <div class="update-img">📷 Update Image</div>
+        <div class="update-body">
+          <div class="update-tag">Resource</div>
+          <div class="update-title">Free A-Level practice paper pack now available to download</div>
+          <div class="update-date">March 30, 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section class="videos" id="videos">
+  <div class="videos-inner">
+    <div class="reveal">
+      <div class="section-label">Watch &amp; Learn</div>
+      <h2 class="section-title">Video <em>Lessons</em></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="videos-grid">
+      <!-- Each video card: replace href with your YouTube link -->
+      <div class="video-card reveal">
+        <a href="https://youtube.com/YOUR_VIDEO_1" target="_blank" class="video-thumb" style="display:flex;">
+          <div class="yt-placeholder">📹 Add YouTube link</div>
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </a>
+        <div class="video-info">
+          <div class="video-label">YouTube • Lesson</div>
+          <div class="video-title">Introduction to Calculus — Understanding Derivatives</div>
+        </div>
+      </div>
+      <div class="video-card reveal">
+        <a href="https://youtube.com/YOUR_VIDEO_2" target="_blank" class="video-thumb" style="display:flex;">
+          <div class="yt-placeholder">📹 Add YouTube link</div>
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </a>
+        <div class="video-info">
+          <div class="video-label">YouTube • Lesson</div>
+          <div class="video-title">Probability Explained Simply — GCSE &amp; A-Level</div>
+        </div>
+      </div>
+      <div class="video-card reveal">
+        <a href="https://youtube.com/YOUR_VIDEO_3" target="_blank" class="video-thumb" style="display:flex;">
+          <div class="yt-placeholder">📹 Add YouTube link</div>
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </a>
+        <div class="video-info">
+          <div class="video-label">YouTube • Tutorial</div>
+          <div class="video-title">Exam Technique — How to Approach Problem-Solving Questions</div>
+        </div>
+      </div>
+      <div class="video-card reveal">
+        <a href="https://youtube.com/YOUR_VIDEO_4" target="_blank" class="video-thumb" style="display:flex;">
+          <div class="yt-placeholder">📹 Add YouTube link</div>
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </a>
+        <div class="video-info">
+          <div class="video-label">YouTube • Lesson</div>
+          <div class="video-title">Algebra Fundamentals — From Basics to A-Level</div>
+        </div>
+      </div>
+      <div class="video-card reveal">
+        <a href="https://youtube.com/YOUR_VIDEO_5" target="_blank" class="video-thumb" style="display:flex;">
+          <div class="yt-placeholder">📹 Add YouTube link</div>
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </a>
+        <div class="video-info">
+          <div class="video-label">YouTube • Q&amp;A</div>
+          <div class="video-title">Live Q&amp;A — Top Student Questions Answered</div>
+        </div>
+      </div>
+      <div class="video-card reveal">
+        <a href="https://youtube.com/YOUR_VIDEO_6" target="_blank" class="video-thumb" style="display:flex;">
+          <div class="yt-placeholder">📹 Add YouTube link</div>
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </a>
+        <div class="video-info">
+          <div class="video-label">YouTube • Tips</div>
+          <div class="video-title">5 Habits Every Maths Student Should Build</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="testimonials-inner">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-label">Student Voices</div>
+      <h2 class="section-title">What <em>Students</em> Say</h2>
+      <div class="divider" style="margin:24px auto 48px;"></div>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testi-card reveal">
+        <div class="testi-text">Mr. Carter completely changed the way I see mathematics. His explanations are clear, patient, and genuinely engaging. I went from a C to an A* in one year.</div>
+        <div class="testi-author">
+          <div class="testi-avatar">S</div>
+          <div>
+            <div class="testi-name">Sarah M.</div>
+            <div class="testi-role">A-Level Student, 2025</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-text">The revision sessions were invaluable. He knows exactly where students get stuck and addresses it head-on. Best teacher I have ever had.</div>
+        <div class="testi-author">
+          <div class="testi-avatar">T</div>
+          <div>
+            <div class="testi-name">Tom K.</div>
+            <div class="testi-role">GCSE Student, 2024</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-text">Thanks to Mr. Carter's competition coaching I qualified for the national finals. His passion for the subject is truly infectious.</div>
+        <div class="testi-author">
+          <div class="testi-avatar">A</div>
+          <div>
+            <div class="testi-name">Amira R.</div>
+            <div class="testi-role">Olympiad Competitor, 2025</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="reveal">
+      <div class="section-label">Get in Touch</div>
+      <h2 class="section-title">Let's <em>Connect</em></h2>
+      <div class="divider"></div>
+      <p class="contact-desc">Whether you are a student, parent, or fellow educator — I would love to hear from you. Reach out via any of the channels below.</p>
+      <div class="contact-cards">
+        <div class="contact-card">
+          <div class="icon">📧</div>
+          <div class="type">Email</div>
+          <div class="val">james@yourcollege.edu</div>
+        </div>
+        <div class="contact-card">
+          <div class="icon">📍</div>
+          <div class="type">Location</div>
+          <div class="val">Your City, Country</div>
+        </div>
+        <div class="contact-card">
+          <div class="icon">🏫</div>
+          <div class="type">School</div>
+          <div class="val">Your School / College Name</div>
+        </div>
+      </div>
+      <div class="social-links">
+        <a href="#" class="social-link" title="YouTube">▶</a>
+        <a href="#" class="social-link" title="LinkedIn">in</a>
+        <a href="#" class="social-link" title="Twitter/X">𝕏</a>
+        <a href="#" class="social-link" title="Instagram">◎</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Mr. James <span>Carter.</span></div>
+  <div class="footer-copy">© 2026 James Carter. All rights reserved.</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav shrink on scroll
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.padding =
+      window.scrollY > 60 ? '12px 60px' : '22px 60px';
+  });
+</script>
+</body>
+</html>
